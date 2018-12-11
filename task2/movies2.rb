@@ -4,6 +4,8 @@ movies = {
 
 movie_name = ARGV[0]
 
+ax = []
+
   if movies.key? movie_name
     puts movies[movie_name]
   else
