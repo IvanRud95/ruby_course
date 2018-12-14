@@ -1,3 +1,5 @@
+KEYS = [:link, :title, :year, :country, :date, :jenre, :duration, :rating, :author, :actors].freeze
+
 ax=[]
 File.open('movies.txt').each do |line|
   ax<<line.split(/\|(?=[\w])/)
