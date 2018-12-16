@@ -22,9 +22,9 @@ puts "Comedies:"
 show_films(sorted)
 
 
-puts "Number of films out of USA:"
-puts films.count {|movie| movie[:country].include?('USA')}
+puts "Number of films without USA:"
+puts films.count { |m| m[:country] != 'USA' }
 
 puts "Authors:"
 sorted = films.map {|movie| movie[:author]}.sort_by {|name| name.split(' ').last}
-puts sorted
+puts sorte
