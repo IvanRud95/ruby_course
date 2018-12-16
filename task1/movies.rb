@@ -21,9 +21,10 @@ sorted = films.sort_by {|movie| movie[:genre]}
 puts "Comedies:"
 show_films(sorted)
 
+
+puts "Number of films out of USA:"
+puts films.count {|movie| movie[:country]}
+
 puts "Authors:"
 sorted = films.map {|movie| movie[:author]}.sort_by {|name| name.split(' ').last}
 puts sorted
-
-puts "Number of films out of USA:"
-puts films.count {  { |movie| movie[:country] != 'USA'}
