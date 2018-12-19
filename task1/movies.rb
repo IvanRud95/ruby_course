@@ -1,5 +1,7 @@
 KEYS = [:link, :name, :year, :country, :date, :genre, :duration, :rating, :author, :actors].freeze
 
+movies = CSV.foreach(FILE_NAME, col_sep: '|', headers: KEYS).map { |movie_arr| build_movie(movie_arr) }
+
 def show_films(sorted)
   sorted.each_with_index do |movie, index|
     puts "#{index + 1}.#{movie[:name]}: (#{movie[:date]}\; #{movie[:genre]}) - #{movie[:duration]}"
