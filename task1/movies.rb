@@ -29,26 +29,26 @@ films_by_month = sorted.each_with_object(Hash.new(0)) {|month, hsh| hsh[month] +
 films_by_month.each {|month, movies| puts "#{Date::MONTHNAMES[month]} - #{films_by_month[month]}"}
 puts "_______"
 
-sorted = films.sort_by {|movie| movie[:month]}.last(5)
+sorted = films.sort_by(&:month).last(5)
 show_films(sorted)
 puts "_______"
 
-sorted = films.sort_by {|movie| movie[:duration].split(' ')[0].to_i}.last(5)
+sorted = films.sort_by{ |movie| -movie[:duration] }.take(5)
 puts "Films by duration: "
 show_films(sorted)
 puts "_______"
 
-sorted = films.sort_by {|movie| movie[:genre]}
-             .select {|movie| movie[:genre].split(',').include?('Comedy')}
-             .sort_by {|movie| movie[:date]}.first(10)
+sorted = films.sort_by(&:genre)
+             .select{ |movie| movie[:genre].split(',').include?('Comedy') }
+             .sort_by(&:date).first(10)
 puts "Comedies:"
 show_films(sorted)
 puts "_______"
 
 puts "Number of films without USA:"
-puts films.count {|m| m[:country] != 'USA'}
+puts films.count{ |m| m[:country] != 'USA' }
 puts "_______"
 
 puts "Authors:"
-sorted = films.map {|movie| movie[:author]}.sort_by {|name| name.split(' ').last}.uniq
+sorted = films.map(&:author).sort_by {|name| name.split(' ').last}.uniq
 puts sorted
