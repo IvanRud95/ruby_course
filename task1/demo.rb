@@ -3,33 +3,26 @@ require_relative 'movie'
 require_relative 'netflix'
 require_relative 'theatre'
 
-# movies = MovieCollection.new
+movies = MovieCollection.new('movies.txt')
+puts '*** Sorting ***'
+%i(link title year month date country genres duration rating producer actors).each do |field|
+  puts movies.sort_by(field).first(5)
+  puts
+end
 
-# puts movies.all
+%i(month year country producer actors genres).each do |field|
+  puts movies.stats(field).inspect
+  puts
+end
 
-# puts movies.all.first.actors
-# puts movies.all.first(5).map(&:genre)
+movie = movies.all.first
+puts movie.genres.inspect
+puts movie.has_genre?('Drama')
+puts movie.has_genre?('Comedy')
 
-# puts movies.sort_by(:genre)
-# puts movies.sort_by(:year)
-
-# begin
-#   puts movies.all.first.has_genre?('Comedy')
-#   puts movies.all.first.has_genre?('Drama')
-#   puts movies.all.first.has_genre?('Ololol')
-# rescue Exception => error
-#   puts error
-# end
- 
-# puts movies.filter(genre: 'Comedy', year: 2010)
-# puts movies.filter(year: 2014..2015)
-# puts movies.filter(year: 2010)
-# puts movies.filter(director: /Coppola/)
-# puts movies.filter(actors: /Hanks/)
-
-# puts movies.stats(:year).map { |m| m.flatten.join(' -> ') }
-# puts movies.stats(:genre).map { |m| m.flatten.join(' -> ') }
-# puts movies.stats(:actors).map { |m| m.flatten.join(' -> ') }
-
-netflix = Netflix.new
-puts netflix.show(genre: 'Comedy', period: :classic)
+puts movies.genres.inspect
+begin
+  movie.has_genre?('Tragedy')
+rescue Exception => error
+  puts error
+end
