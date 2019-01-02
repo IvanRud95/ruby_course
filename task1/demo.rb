@@ -1,5 +1,5 @@
-require_relative 'lib/movie'
-require_relative 'lib/movie_collection'
+require_relative 'movie'
+require_relative 'movie_collection'
 
 file_path = ARGV[0] || 'movies.txt'
 
