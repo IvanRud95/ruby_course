@@ -2,6 +2,7 @@ require_relative 'movie.rb'
 
 class MovieCollection
   KEYS = [:link, :name, :year, :country, :date, :genre, :duration, :rating, :author, :actors].freeze
+  
   def initialize(file_path)
     f = File.open(file_path, 'r:UTF-8')
     @films =  f.map {  |film| Movie.new(KEYS.zip(film.strip.split('|')).to_h) }
