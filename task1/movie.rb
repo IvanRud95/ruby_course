@@ -1,5 +1,5 @@
 class Movie
-  attr_accessor :link,
+  attr_reader :link,
               :name,
               :year,
               :country,
@@ -9,6 +9,7 @@ class Movie
               :rating,
               :author,
               :actors
+  
   def initialize(movie = {})
     @link = movie[:link]
     @name = movie[:name]
@@ -21,9 +22,9 @@ class Movie
     @author = movie[:author]
     @actors = movie[:actors]
   end
-
-  def has_genre?(genre)
-    @genre.include?(genre) ? "yes it's #{genre}" : "no it's not #{genre}"
+  
+  def genre_exists?(genre)
+    @genres.include?(genre)
   end
 
   def to_s
