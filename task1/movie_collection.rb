@@ -17,8 +17,9 @@ class MovieCollection
    @sort_by(&movie_field)
   end
 
-  def filter(movie_field, value)
-    @films.select { |film| film.send(movie_field).include?(value) }
+  def filter(filters)
+    filters.reduce(@movies) { |result, (key, value)|
+    result.select {|movies| movies.match?(key, value) } }
   end
 
   def stats(movie_field)
