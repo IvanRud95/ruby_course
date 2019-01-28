@@ -14,7 +14,7 @@ class MovieCollection
   end
 
   def movie_sort(movie_field)
-    @films.sort_by { |film| film.send(movie_field) }
+   @sort_by(&movie_field)
   end
 
   def filter(movie_field, value)
