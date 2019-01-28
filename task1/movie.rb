@@ -23,8 +23,9 @@ class Movie
     @actors = movie[:actors]
   end
   
-  def genre_exists?(genre)
-    @genres.include?(genre)
+ def has_genre?(genre)
+    raise "'#{genre}' genre does not exist." unless collection.genre_exists?(genre)
+    @genre.include?(genre)
   end
 
   def to_s
