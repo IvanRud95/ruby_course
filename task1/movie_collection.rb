@@ -25,4 +25,7 @@ class MovieCollection
     films_authors = movie_sort(movie_field).map { |film| film.send(movie_field) }
     films_authors.each_with_object(Hash.new(0)) { |movie_field, hsh| hsh[movie_field] += 1 }.to_h
   end
-end
+  
+  def genre_exists?(genre)
+     @all_genres.include?(genre)
+  end
