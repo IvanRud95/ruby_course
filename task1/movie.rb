@@ -24,7 +24,7 @@ class Movie
   end
   
  def has_genre?(genre)
-    raise "'#{genre}' genre does not exist." unless collection.genre_exists?(genre)
+    raise "'#{genre}' genre does not exist." unless movie_collection.genre_exists?(genre)
     @genre.include?(genre)
   end
 
