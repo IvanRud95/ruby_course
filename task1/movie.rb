@@ -27,7 +27,16 @@ class Movie
     raise "'#{genre}' genre does not exist." unless movie_collection.genre_exists?(genre)
     @genre.include?(genre)
   end
-
+  
+ def match?(field, filter)
+    field_value = self.send(field)
+    if field_value.is_a?(Array)
+      field_value.any? { |field| filter === field }
+    else
+      filter === field_value
+    end
+  end
+  
   def to_s
     "#{@name}: (#{@date}\; #{@genre}) - #{@duration} - #{@author}"
   end
