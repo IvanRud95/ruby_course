@@ -19,7 +19,7 @@ class MovieCollection
 
   def filter(filters)
     filters.reduce(@movies) { |result, (key, value)|
-    result.select {|movies| movies.match?(key, value) } }
+    result.select {|movies| movie.match?(key, value) } }
   end
 
   def stats(movie_field)
