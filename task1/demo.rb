@@ -1,4 +1,8 @@
+require_relative 'movie.rb'
+require_relative 'movie_collection.rb'
+
 movies = MovieCollection.new('movies.txt')
+
 %i(link title year month date country genres duration rating producer actors).each do |field|
   puts movies.sort_by(field).first(5)
   puts
@@ -6,16 +10,16 @@ end
 
 
 [
-  { genres: 'Comedy' }, { country: 'USA' }, { country: 'Russia' }, { title: /Terminator/i },
-  { year: 2000 }, { producer: 'Robert Zemeckis' }, { actors: 'Morgan Freeman' }, { actors: /Morgan/i },
-  { year: 2001..2008 }, { title: /Terminator/i, year: 1980..1990 }
+    { genres: 'Comedy' }, { country: 'USA' }, { country: 'Russia' }, { title: /Terminator/i },
+    { year: 2000 }, { producer: 'Robert Zemeckis' }, { actors: 'Morgan Freeman' }, { actors: /Morgan/i },
+    { year: 2001..2008 }, { title: /Terminator/i, year: 1980..1990 }
 ].each do |facet|
   puts facet
   puts movies.filter(facet).first(5).inspect
   puts
 end
 
-puts '*** Stats ***'
+
 %i(month year country producer actors genres).each do |field|
   puts movies.stats(field).inspect
   puts
