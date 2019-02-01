@@ -1,31 +1,19 @@
 class Movie
 
-  GenreNotFoundError = Class.new(RuntimeError)
+  attr_accessor :collection, :url, :title, :year, :country, :date, :genre, :length, :rating, :director, :actors
 
-  attr_reader :link,
-              :name,
-              :year,
-              :country,
-              :date,
-              :genre,
-              :duration,
-              :rating,
-              :author,
-              :actors,
-              :collection
-
-  def initialize(collection = nil, movie = {})
-    @link = movie[:link]
-    @name = movie[:name]
-    @year = movie[:year]
-    @country = movie[:country]
-    @date = movie[:date]
-    @genre = movie[:genre]
-    @duration = movie[:duration]
-    @rating = movie[:rating]
-    @author = movie[:author]
-    @actors = movie[:actors]
+  def initialize(collection, url, title, year, country, date, genre, length, rating, director, actors)
     @collection = collection
+    @url        = url
+    @title      = title
+    @year       = year.to_i
+    @country    = country
+    @date       = date
+    @genre      = genre.split(',')
+    @length     = length
+    @rating     = rating
+    @director   = director
+    @actors     = actors.split(',')
   end
 
   def has_genre?(genre)
@@ -33,21 +21,17 @@ class Movie
     @genre.include?(genre)
   end
 
+  def to_s
+    "#{@name}: (#{@date}; #{@genre}) - #{@duration} - #{@author}"
+  end
+
   def match?(field, filter)
     field_value = self.send(field)
     if field_value.is_a?(Array)
-      field_value.any? {|field| filter === field}
+      field_value.any? { |field| filter === field }
     else
       filter === field_value
     end
   end
 
-  def to_s
-    "#{@name}: (#{@date}\; #{@genre}) - #{@duration} - #{@author}"
-  end
-
-
-  def inspect
-    "#{title} | #{country} | #{year} | #{producer} | #{genre} | #{actors}"
-  end
 end
