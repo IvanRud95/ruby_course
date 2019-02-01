@@ -1,41 +1,31 @@
-require_relative 'movie'
 require_relative 'movie_collection'
+require_relative 'movie'
 
-file_path = ARGV[0] || 'movies.txt'
 
-unless File.exist?(file_path)
-  puts "No such file #{file_path}"
-  exit 1
-end
+movies = MovieCollection.new
 
-movies = MovieCollection.new(file_path)
+puts movies.all
 
-puts "First movie: "
-puts movies.all[0].to_s
-puts "________________ "
-
-puts "first movie actors:"
 puts movies.all.first.actors
-puts "________________ "
+puts movies.all.first(5).map(&:genre)
 
-puts "Check first movie is Comedy:"
-puts movies.all.first.has_genre?('Comedy')
-puts "________________ "
+puts movies.sort_by(:genre)
+puts movies.sort_by(:year)
 
-puts "Check first movie is Drama:"
-puts movies.all.first.has_genre?('Drama')
-puts "________________ "
+begin
+   puts movies.all.first.has_genre?('Comedy')
+   puts movies.all.first.has_genre?('Drama')
+   puts movies.all.first.has_genre?('Ololol')
+ rescue Exception => error
+   puts error
+ end
 
-puts "Check movies sort (by date first 5 ):"
-puts movies.movie_sort(:date).first(5)
-puts "________________ "
+ puts movies.filter(genre: 'Comedy', year: 2010)
+ puts movies.filter(year: 2014..2015)
+ puts movies.filter(year: 2010)
+ puts movies.filter(director: /Coppola/)
+ puts movies.filter(actors: /Hanks/)
 
-puts "Check movies filter (by genre first 5):"
-puts movies.filter(:genre, 'Comedy').first(5)
-puts "________________ "
-
-puts "Check movies statistic (by author):"
-movies = movies.stats(:author)
-movies.each do |author, movie_counter|
-  puts "#{author} -- #{movies[author]}"
-end
+ puts movies.stats(:year).map { |m| m.flatten.join(' -> ') }
+ puts movies.stats(:genre).map { |m| m.flatten.join(' -> ') }
+ puts movies.stats(:actors).map { |m| m.flatten.join(' -> ') }
