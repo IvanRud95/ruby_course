@@ -31,3 +31,4 @@ class MovieCollection
   def genre_exists?(genre)
      @genres.include?(genre)
   end
+end
