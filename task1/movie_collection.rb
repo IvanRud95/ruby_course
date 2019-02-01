@@ -1,47 +1,46 @@
 require 'csv'
-require 'date'
-require_relative 'movie.rb'
 
 class MovieCollection
-  KEYS = [:link, :name, :year, :country, :date, :genre, :duration, :rating, :author, :actors].freeze
 
-  def initialize(file_path)
-    f = File.open(file_path, 'r:UTF-8')
-    @films =  f.map {  |film| Movie.new(KEYS.zip(film.strip.split('|')).to_h) }
-    @genres = @films.flat_map(&:genre).uniq
-  end
+  KEYS = [:url, :title, :year, :country, :date, :genre, :length, :rating, :director, :actors]
 
-  def each(&block)
-    @films.each(&block)
+  def initialize(file_name = ARGV.first)
+    default_name = 'movies.txt'
+    file_name ||= default_name
+
+    unless File.exist?(file_name)
+      puts "File doesn't exist."
+      exit
+    end
+
+    @movies = CSV.read(file_name, write_headers: true, headers: KEYS, col_sep: '|').map(&:to_h)
+                  .map { |m| Movie.new(self, m[:url], m[:title], m[:year], m[:country], m[:date], m[:genre], m[:length], m[:rating], m[:director], m[:actors]) }
+    @all_genres = @movies.map(&:genre)
   end
 
   def all
-    @films
+    @movies
   end
 
-  def movie_sort(movie_field)
-    @sort_by(movie_field)
+  def sort_by(value)
+    @movies.sort_by(&value)
   end
 
-
-  def filter(filters)
-    filters.reduce(@films) { |result, (key, value)|
-      result.select {|films| films.match?(key, value) } }
+  def stats(value)
+    @movies.map(&value).flatten
+        .group_by { |value| value }.map { |k, v| { k => v.count } }
   end
 
-  def stats(movie_field)
-    films_authors = movie_sort(movie_field).map { |film| film.send(movie_field) }
-    films_authors.each_with_object(Hash.new(0)) { |movie_field, hsh| hsh[movie_field] += 1 }.to_h
-  end
-
-  def print_stats(movie_field)
-    stats(movie_field).sort.each do |field_name, count|
-      puts "#{field_name}: #{count}"
-    end
+  def to_s
+    "#{@movies}"
   end
 
   def genre_exists?(genre)
-    @genre.include?(genre)
+    @all_genres.include?(genre)
   end
 
+  def filter(filters)
+    filters.reduce(@movies) { |result, (key, value)|
+      result.select {|movies| movies.match?(key, value) } }
+  end
   end
