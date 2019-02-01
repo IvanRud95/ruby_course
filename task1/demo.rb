@@ -1,38 +1,41 @@
-require_relative 'movie.rb'
-require_relative 'movie_collection.rb'
+require_relative 'movie'
+require_relative 'movie_collection'
 
-movies = MovieCollection.new('movies.txt')
+file_path = ARGV[0] || 'movies.txt'
 
-%i(link title year month date country genres duration rating producer actors).each do |field|
-  puts movies.sort_by(field).first(5)
-  puts
+unless File.exist?(file_path)
+  puts "No such file #{file_path}"
+  exit 1
 end
 
+movies = MovieCollection.new(file_path)
 
-[
-    { genres: 'Comedy' }, { country: 'USA' }, { country: 'Russia' }, { title: /Terminator/i },
-    { year: 2000 }, { producer: 'Robert Zemeckis' }, { actors: 'Morgan Freeman' }, { actors: /Morgan/i },
-    { year: 2001..2008 }, { title: /Terminator/i, year: 1980..1990 }
-].each do |facet|
-  puts facet
-  puts movies.filter(facet).first(5).inspect
-  puts
-end
+puts "First movie: "
+puts movies.all[0].to_s
+puts "________________ "
 
+puts "first movie actors:"
+puts movies.all.first.actors
+puts "________________ "
 
-%i(month year country producer actors genres).each do |field|
-  puts movies.stats(field).inspect
-  puts
-end
+puts "Check first movie is Comedy:"
+puts movies.all.first.has_genre?('Comedy')
+puts "________________ "
 
-movie = movies.all.first
-puts movie.genres.inspect
-puts movie.has_genre?('Crime')
-puts movie.has_genre?('Comedy')
+puts "Check first movie is Drama:"
+puts movies.all.first.has_genre?('Drama')
+puts "________________ "
 
-puts movies.genres.inspect
-begin
-  movie.has_genre?('Tragedy')
-rescue Movie::GenreNotFoundError => e
-  puts e
+puts "Check movies sort (by date first 5 ):"
+puts movies.movie_sort(:date).first(5)
+puts "________________ "
+
+puts "Check movies filter (by genre first 5):"
+puts movies.filter(:genre, 'Comedy').first(5)
+puts "________________ "
+
+puts "Check movies statistic (by author):"
+movies = movies.stats(:author)
+movies.each do |author, movie_counter|
+  puts "#{author} -- #{movies[author]}"
 end
