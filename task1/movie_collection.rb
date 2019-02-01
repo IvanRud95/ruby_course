@@ -8,7 +8,7 @@ class MovieCollection
   def initialize(file_path)
     f = File.open(file_path, 'r:UTF-8')
     @films =  f.map {  |film| Movie.new(KEYS.zip(film.strip.split('|')).to_h) }
-    @genres = @films.flat_map(&:genres).uniq
+    @genres = @films.flat_map(&:genre).uniq
   end
 
   def each(&block)
