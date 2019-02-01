@@ -7,6 +7,7 @@ class MovieCollection
     f = File.open(file_path, 'r:UTF-8')
     @films =  f.map {  |film| Movie.new(KEYS.zip(film.strip.split('|')).to_h) }
     f.close
+    @genres = @films.flat_map(&:genres).uniq
   end
 
   def all
@@ -28,5 +29,5 @@ class MovieCollection
   end
   
   def genre_exists?(genre)
-     @all_genres.include?(genre)
+     @genres.include?(genre)
   end
