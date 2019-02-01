@@ -48,6 +48,6 @@ class Movie
 
 
   def inspect
-    "#{title} | #{country} | #{year} | #{producer} | #{genres} | #{actors}"
+    "#{title} | #{country} | #{year} | #{producer} | #{genre} | #{actors}"
   end
 end
