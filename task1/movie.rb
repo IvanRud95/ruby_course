@@ -1,4 +1,7 @@
 class Movie
+
+  GenreNotFoundError = Class.new(RuntimeError)
+
   attr_reader :link,
               :name,
               :year,
@@ -8,9 +11,10 @@ class Movie
               :duration,
               :rating,
               :author,
-              :actors
-  
-  def initialize(movie = {})
+              :actors,
+              :collection
+
+  def initialize(collection = nil, movie = {})
     @link = movie[:link]
     @name = movie[:name]
     @year = movie[:year]
@@ -21,23 +25,29 @@ class Movie
     @rating = movie[:rating]
     @author = movie[:author]
     @actors = movie[:actors]
+    @collection = collection
   end
-  
- def has_genre?(genre)
-    raise "'#{genre}' genre does not exist." unless movie_collection.genre_exists?(genre)
+
+  def has_genre?(genre)
+    raise "'#{genre}' genre does not exist." unless collection.genre_exists?(genre)
     @genre.include?(genre)
   end
-  
- def match?(field, filter)
+
+  def match?(field, filter)
     field_value = self.send(field)
     if field_value.is_a?(Array)
-      field_value.any? { |field| filter === field }
+      field_value.any? {|field| filter === field}
     else
       filter === field_value
     end
   end
-  
+
   def to_s
     "#{@name}: (#{@date}\; #{@genre}) - #{@duration} - #{@author}"
+  end
+
+
+  def inspect
+    "#{title} | #{country} | #{year} | #{producer} | #{genres} | #{actors}"
   end
 end
