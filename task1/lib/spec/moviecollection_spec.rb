@@ -6,7 +6,7 @@ require_relative '../lib/movie'
 
 
 
-describe Imbd::MovieCollection do
+describe :MovieCollection do
 
     subject(:collection) { described_class.new("lib/movies.txt") }
 
