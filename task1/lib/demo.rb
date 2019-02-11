@@ -1,4 +1,4 @@
-require_relative 'movie_collection'
+require_relative 'moviecollection'
 require_relative 'movie'
 
 movies = MovieCollection.new
