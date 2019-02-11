@@ -1,8 +1,12 @@
 
 require 'csv'
 
-class MovieCollection
 
+class MovieCollection
+  
+    class GenreNotExist < StandardError; end
+    class ValueNotExist < StandardError; end
+  
   KEYS = [:url, :title, :year, :country, :date, :genre, :length, :rating, :director, :actors]
 
   def initialize(file_name = ARGV.first)
