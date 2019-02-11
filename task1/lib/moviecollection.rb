@@ -4,6 +4,8 @@ require 'csv'
 
 class MovieCollection
   
+  include Enumerable
+  
     class GenreNotExist < StandardError; end
     class ValueNotExist < StandardError; end
   
