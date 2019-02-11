@@ -1,7 +1,6 @@
 require_relative '../movie_collection'
 require_relative '../movie'
-require_relative '../netflix'
-require_relative '../theatre'
+
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
