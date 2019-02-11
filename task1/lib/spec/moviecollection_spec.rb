@@ -16,7 +16,7 @@ describe :MovieCollection do
 
       context 'when filed not exist' do
         let(:criteria) { :director1 }
-        it { expect { subject }.to raise_error(:MovieCollection::ParametrNotExist) }
+        it { expect { subject }.to raise_error(:MovieCollection::ValueNotExist) }
       end
 
       :MovieCollection::KEYS.each do |field|
@@ -36,7 +36,7 @@ describe :MovieCollection do
 
       context 'when filed not exist' do
         let(:criteria) { :director1 }
-        it { expect { subject }.to raise_error(:MovieCollection::ParametrNotExist) }
+        it { expect { subject }.to raise_error(:MovieCollection::ValueNotExist) }
       end
 
       shared_examples "stats" do
@@ -59,7 +59,7 @@ describe :MovieCollection do
 
       context 'when filed not exist' do
         let(:criteria) { { director1: "James Cameron" } }
-        it { expect { subject }.to raise_error(:MovieCollection::ParametrNotExist) }
+        it { expect { subject }.to raise_error(:MovieCollection::ValueNotExist) }
       end
 
       context 'when director' do
