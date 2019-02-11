@@ -3,7 +3,7 @@ require 'csv'
 require 'date'
 require_relative '../lib/moviecollection'
 require_relative '../lib/movie'
-
+require_relative '../lib/rspec'
 
 
 describe :MovieCollection do
