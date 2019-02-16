@@ -1,3 +1,5 @@
+module Imbd
+  
 class Movie
 
   attr_accessor :collection, :url, :title, :year, :country, :date, :genre, :length, :rating, :director, :actors, :period, :price
@@ -41,3 +43,4 @@ class Movie
   end
 
 end
+      end
