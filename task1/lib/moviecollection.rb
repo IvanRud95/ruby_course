@@ -12,7 +12,7 @@ class MovieCollection
   KEYS = [:url, :title, :year, :country, :date, :genre, :length, :rating, :director, :actors]
 
   def initialize(file_name = ARGV.first)
-    default_name = 'movies.txt'
+    default_name = 'task1/lib/movies.txt'
     file_name ||= default_name
 
     unless File.exist?(file_name)
